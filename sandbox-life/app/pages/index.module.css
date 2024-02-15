@@ -1,0 +1,83 @@
+.header,
+.subheader {
+  align-self: stretch;
+  position: relative;
+}
+.header {
+  margin: 0;
+  font-size: inherit;
+  line-height: 133.4%;
+  font-weight: 400;
+  font-family: inherit;
+}
+.subheader {
+  font-size: var(--typography-body2-size);
+  letter-spacing: 0.17px;
+  line-height: 143%;
+  color: var(--text-secondary);
+}
+.content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+.starsharpIcon {
+  height: 24px;
+  width: 24px;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.icon {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 0 4px;
+}
+.iconbutton {
+  height: 48px;
+  width: 48px;
+  border-radius: var(--br-81xl);
+  overflow: hidden;
+  flex-shrink: 0;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-5xs);
+  box-sizing: border-box;
+}
+.cardheader,
+.container,
+.login {
+  display: flex;
+  align-items: center;
+}
+.cardheader {
+  align-self: stretch;
+  flex-direction: row;
+  justify-content: flex-start;
+  padding: var(--padding-base);
+}
+.container,
+.login {
+  width: 552px;
+  flex-direction: column;
+  justify-content: center;
+}
+.login {
+  width: 100%;
+  position: relative;
+  background-color: var(--primary-contrast);
+  overflow: hidden;
+  flex-direction: row;
+  padding: 314px 20px;
+  box-sizing: border-box;
+  text-align: left;
+  font-size: var(--typography-h5-size);
+  color: var(--text-primary);
+  font-family: var(--typography-body2);
+}

@@ -1,6 +1,6 @@
-import Image from "next/image";
-import Login from "./pages";
+import Index from ".";
+import React from 'react';
 
 export default function Home() {
-  return ( <Login/> );
+  return ( <Index/> );
 }

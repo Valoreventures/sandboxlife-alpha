@@ -1,5 +1,3 @@
-'use client';
-
 import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -59,7 +57,9 @@ export default function SignIn() {
         <Typography component="h1" variant="h5" color={'black'}>
           Sign in
         </Typography>
-        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+        <Box component="form"
+          // onSubmit={handleSubmit}
+          noValidate sx={{ mt: 1 }}>
           <TextField
             margin="normal"
             required
@@ -99,7 +99,7 @@ export default function SignIn() {
               </Link>
             </Grid>
             <Grid item>
-              <Link href="#" variant="body2">
+              <Link href="/register" variant="body2">
                 {"Don't have an account? Sign Up"}
               </Link>
             </Grid>

@@ -1,65 +1,131 @@
+import * as React from 'react';
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import CssBaseline from '@mui/material/CssBaseline';
+import TextField from '@mui/material/TextField';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
+import Link from '@mui/material/Link';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-import React from 'react';
-import { Box, VStack, Checkbox, Button, Heading, Text, Link, Divider, useColorModeValue, Avatar, HStack } from '@chakra-ui/react';
-import { FaGoogle } from 'react-icons/fa';
-import { CustomInput } from './input-form';
+function Copyright(props: any) {
+  return (
+    <Typography variant="body2" color="text.secondary" align="center" {...props}>
+      {'Copyright © '}
+      <Link color="inherit" href="https://mui.com/">
+        Your Website
+      </Link>{' '}
+      {new Date().getFullYear()}
+      {'.'}
+    </Typography>
+  );
+}
 
-const Register = () => {
-  // const bgColor = useColorModeValue('white', 'gray.700');
-  // const textColor = useColorModeValue('gray.700', 'white');
+// TODO remove, this demo shouldn't need to reset the theme.
+
+export default function SignUp() {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    console.log({
+      email: data.get('email'),
+      password: data.get('password'),
+    });
+  };
 
   return (
-    <Box p={8} style={{ width: '80%', margin: '0 auto' }} width={'50vw'}>
-      <HStack gap={'5rem'}>
-      <VStack spacing={4} align="flex-start">
-        <Heading as="h1" size="xl">Preline: A vision for 2024</Heading>
-        <Text fontSize="lg" color={'gray.700'}>
-          Fully customizable rules to match your unique needs
-        </Text>
-        <Text fontSize="md" color="gray.500">
-          We provide you with a test account that can be set up in seconds.
-        </Text>
-        {/* Testimonial section will be added here later */}
-        <Box height={'400px'} />
-        {/* Footer area will be added here later */}
-      </VStack>
-
-      <VStack spacing={4} align="flex-start" width={'50vw'}>
-        <Box height={'200px'} />
-        {/* <Heading as="h1" size="xl">Preline: A vision for 2024</Heading>
-        <Text fontSize="lg" color={'gray.700'}>
-          Fully customizable rules to match your unique needs
-        </Text>
-        <Text fontSize="md" color="gray.500">
-          We provide you with a test account that can be set up in seconds.
-        </Text> */}
-        {/* Testimonial section will be added here later */}
-        <Box as="section" p={8} bg={'white'} boxShadow="md" borderRadius="20px" width={'375px'} margin={'0 auto'} alignItems={'center'}>
-          {/* <Heading as="h2" size="lg" mb={4}>Start your free trial</Heading> */}
-          {/* <Button leftIcon={<FaGoogle />} colorScheme="red" variant="outline" w="full" mb={2}>
-            Sign up with Google
-          </Button> */}
-          <Divider my={4} />
-          <VStack spacing={4} align="stretch">
-            <HStack>
-              <CustomInput placeholder="First name" style={{ padding: '20px' }} />
-              <CustomInput placeholder="Last name" style={{ padding: '20px' }} />
-            </HStack>
-            <HStack>
-              <CustomInput placeholder="Email" style={{ padding: '20px' }} />
-              <CustomInput placeholder="Company name" style={{ padding: '20px' }} />
-            </HStack>
-            <CustomInput placeholder="New password" type="password" style={{ padding: '20px', width: '330px' }} />
-            <CustomInput placeholder="Current password" type="password" style={{ padding: '20px', width: '330px' }} />
-            <Checkbox defaultChecked>I accept the Terms and Conditions</Checkbox>
-            <Button colorScheme="blue" w="full" >Get started</Button>
-          </VStack>
+    <Container component="main" maxWidth="xs">
+      <CssBaseline />
+      <Box
+        sx={{
+          marginTop: 8,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}
+      >
+        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+          <LockOutlinedIcon />
+        </Avatar>
+        <Typography component="h1" variant="h5">
+          Sign up
+        </Typography>
+        <Box component="form" noValidate 
+        //  onSubmit={handleSubmit} 
+        sx={{ mt: 3 }}>
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                autoComplete="given-name"
+                name="firstName"
+                required
+                fullWidth
+                id="firstName"
+                label="First Name"
+                autoFocus
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                required
+                fullWidth
+                id="lastName"
+                label="Last Name"
+                name="lastName"
+                autoComplete="family-name"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                required
+                fullWidth
+                id="email"
+                label="Email Address"
+                name="email"
+                autoComplete="email"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                required
+                fullWidth
+                name="password"
+                label="Password"
+                type="password"
+                id="password"
+                autoComplete="new-password"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <FormControlLabel
+                control={<Checkbox value="allowExtraEmails" color="primary" />}
+                label="I want to receive inspiration, marketing promotions and updates via email."
+              />
+            </Grid>
+          </Grid>
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
+          >
+            Sign Up
+          </Button>
+          <Grid container justifyContent="flex-end">
+            <Grid item>
+              <Link href="/login" variant="body2">
+                Already have an account? Sign in
+              </Link>
+            </Grid>
+          </Grid>
         </Box>
-        {/* Footer area will be added here later */}
-      </VStack>
-      </HStack>
-    </Box>
+      </Box>
+      <Copyright sx={{ mt: 5 }} />
+    </Container>
   );
-};
-
-export default Register;
+}

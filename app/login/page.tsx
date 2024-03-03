@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -18,8 +20,8 @@ function Copyright(props: any) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
+      <Link color="inherit" href="https://sandboxlife.com/">
+        Sandboxlife
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -31,12 +33,15 @@ function Copyright(props: any) {
 // const defaultTheme = createTheme();
 
 export default function SignIn() {
+  const emailRef = React.useRef();
+  const passwordRef = React.useRef();
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    console.log(event.currentTarget);
     const data = new FormData(event.currentTarget);
     console.log({
-      email: data.get('email'),
-      password: data.get('password'),
+      email: data,
+      // password: passwordRef.current.value,
     });
   };
 
@@ -54,14 +59,18 @@ export default function SignIn() {
         <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
           <LockOutlinedIcon />
         </Avatar>
-        <Typography component="h1" variant="h5" color={'black'}>
-          Sign in
+        <Typography component="h1" variant="h5" color={'#9b1d1e'}>
+          Sandboxlife
+        </Typography>
+        <Typography component="h5" color={'#9b1d1e'}>
+          Build your profile
         </Typography>
         <Box component="form"
           // onSubmit={handleSubmit}
           noValidate sx={{ mt: 1 }}>
           <TextField
             margin="normal"
+            ref={emailRef}
             required
             fullWidth
             id="email"
@@ -73,6 +82,7 @@ export default function SignIn() {
           <TextField
             margin="normal"
             required
+            ref={passwordRef}
             fullWidth
             name="password"
             label="Password"
@@ -86,6 +96,7 @@ export default function SignIn() {
           />
           <Button
             type="submit"
+            onSubmit={handleSubmit}
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}

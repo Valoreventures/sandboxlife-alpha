@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -12,13 +14,21 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
+
+import dayjs, { Dayjs } from 'dayjs';
+import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
+import CommonlyUsedComponents from '../../components/DatePicker';
 
 function Copyright(props: any) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
+      <Link color="inherit" href="https://sandboxlife.com/">
+        Sandboxlife
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -29,6 +39,10 @@ function Copyright(props: any) {
 // TODO remove, this demo shouldn't need to reset the theme.
 
 export default function SignUp() {
+  const [gender, setGender] = React.useState('m');
+  const [dob, setDob] = React.useState<Dayjs | null>(dayjs('2022-04-17'));
+
+  // const [dob, setDob] = React.useState(dayjs('2022-04-17'));
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -37,6 +51,11 @@ export default function SignUp() {
       password: data.get('password'),
     });
   };
+
+  const handleChange = (event) => {
+    setGender(event.target.value);
+
+  }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -52,8 +71,11 @@ export default function SignUp() {
         <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
           <LockOutlinedIcon />
         </Avatar>
-        <Typography component="h1" variant="h5">
-          Sign up
+        <Typography component="h1" variant="h5" color={'#9b1d1e'}>
+          Sandboxlife
+        </Typography>
+        <Typography component="h5" color={'#9b1d1e'}>
+          Build your profile
         </Typography>
         <Box component="form" noValidate 
         //  onSubmit={handleSubmit} 
@@ -80,6 +102,7 @@ export default function SignUp() {
                 autoComplete="family-name"
               />
             </Grid>
+            
             <Grid item xs={12}>
               <TextField
                 required
@@ -101,6 +124,35 @@ export default function SignUp() {
                 autoComplete="new-password"
               />
             </Grid>
+            <Grid item xs={12}>
+              <TextField
+                required
+                fullWidth
+                name="confirmPassword"
+                label="Confirm Password"
+                type="confirmPassword"
+                id="password"
+                autoComplete="new-password"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              {/* <InputLabel id="demo-simple-select-label">Age</InputLabel> */}
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={gender}
+                label="Gender"
+                onChange={handleChange}
+              >
+                <MenuItem value={'m'}>Male</MenuItem>
+                <MenuItem value={'f'}>Female</MenuItem>
+                <MenuItem value={'other'}>Other</MenuItem>
+              </Select>
+            </Grid>
+            <Grid item xs={12}>
+              <CommonlyUsedComponents />
+            </Grid>
+            
             <Grid item xs={12}>
               <FormControlLabel
                 control={<Checkbox value="allowExtraEmails" color="primary" />}

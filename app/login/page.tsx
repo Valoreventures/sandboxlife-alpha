@@ -15,6 +15,8 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import theme from '../theme';
+import { postAPI } from '../../services/apiService';
+import { CircularProgress } from '@mui/material';
 
 function Copyright(props: any) {
   return (
@@ -33,17 +35,44 @@ function Copyright(props: any) {
 // const defaultTheme = createTheme();
 
 export default function SignIn() {
-  const emailRef = React.useRef();
-  const passwordRef = React.useRef();
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const [form, setForm] = React.useState({ });
+  const [loginApiResult, setLoginApiResult] = React.useState({ loading: false, error: null, result: null })
+  const handleChange = (event) => {
     event.preventDefault();
-    console.log(event.currentTarget);
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data,
-      // password: passwordRef.current.value,
-    });
+    const id = event.target.id
+    const value = event.target.value
+    const updatedForm = {
+      ...form,
+      [id] : value
+    };
+    setForm(updatedForm);
   };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    setLoginApiResult({ ...loginApiResult, loading: true });
+    postAPI('/users/login', form).then(result => {
+      setLoginApiResult({ ...loginApiResult, loading: false, result });
+    }).catch(e => {
+      setLoginApiResult({ ...loginApiResult, loading: false, error: e });
+      console.log(e, 'error');
+    })
+  }
+
+  React.useEffect(() => {
+    const listener = event => {
+      if (event.code === "Enter" || event.code === "NumpadEnter") {
+        event.preventDefault();
+        handleSubmit(event);
+      }
+    };
+    document.addEventListener("keydown", listener);
+    return () => {
+      document.removeEventListener("keydown", listener);
+    };
+  }, [])
+
+
 
   return (
     <Container component="main" maxWidth="xs">
@@ -65,14 +94,15 @@ export default function SignIn() {
         <Typography component="h5" color={'#9b1d1e'}>
           Build your profile
         </Typography>
+        
         <Box component="form"
-          // onSubmit={handleSubmit}
           noValidate sx={{ mt: 1 }}>
           <TextField
             margin="normal"
-            ref={emailRef}
+            onChange={handleChange}
             required
             fullWidth
+            value={form['email'] || ''}
             id="email"
             label="Email Address"
             name="email"
@@ -82,27 +112,31 @@ export default function SignIn() {
           <TextField
             margin="normal"
             required
-            ref={passwordRef}
+            onChange={handleChange}
+            value={form['password_hash'] || ''}
             fullWidth
             name="password"
             label="Password"
             type="password"
-            id="password"
+            id="password_hash"
             autoComplete="current-password"
           />
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          />
-          <Button
-            type="submit"
-            onSubmit={handleSubmit}
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-          >
-            Sign In
-          </Button>
+          
+          {
+            loginApiResult.loading ? 
+            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+              <CircularProgress />
+            </Box> : 
+            <Button
+              onClick={handleSubmit}
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+            >
+              Sign in
+            </Button>
+          }
+          
           <Grid container>
             <Grid item xs>
               <Link href="#" variant="body2">

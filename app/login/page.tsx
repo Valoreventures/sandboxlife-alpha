@@ -5,18 +5,16 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import theme from '../theme';
 import { postAPI } from '../../services/apiService';
 import { CircularProgress } from '@mui/material';
+import { useAuthContext } from '../../AuthProvider';
+import { useRouter } from 'next/navigation';
 
 function Copyright(props: any) {
   return (
@@ -35,7 +33,9 @@ function Copyright(props: any) {
 // const defaultTheme = createTheme();
 
 export default function SignIn() {
-  const [form, setForm] = React.useState({ });
+  const auth = useAuthContext();
+  const router = useRouter();
+  const [form, setForm] = React.useState({ email: '', password_hash: '' });
   const [loginApiResult, setLoginApiResult] = React.useState({ loading: false, error: null, result: null })
   const handleChange = (event) => {
     event.preventDefault();
@@ -53,6 +53,9 @@ export default function SignIn() {
     setLoginApiResult({ ...loginApiResult, loading: true });
     postAPI('/users/login', form).then(result => {
       setLoginApiResult({ ...loginApiResult, loading: false, result });
+      console.log(auth, 'auth res');
+      auth.updateUser(result);
+      setTimeout(() => router.push('/home'), 500);
     }).catch(e => {
       setLoginApiResult({ ...loginApiResult, loading: false, error: e });
       console.log(e, 'error');
@@ -75,7 +78,7 @@ export default function SignIn() {
 
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container maxWidth="xs">
       <CssBaseline />
       <Box
         sx={{
@@ -95,12 +98,11 @@ export default function SignIn() {
           Build your profile
         </Typography>
         
-        <Box component="form"
-          noValidate sx={{ mt: 1 }}>
+        <Box sx={{ mt: 1 }}>
           <TextField
             margin="normal"
             onChange={handleChange}
-            required
+            // required
             fullWidth
             value={form['email'] || ''}
             id="email"
@@ -111,7 +113,7 @@ export default function SignIn() {
           />
           <TextField
             margin="normal"
-            required
+            // required
             onChange={handleChange}
             value={form['password_hash'] || ''}
             fullWidth

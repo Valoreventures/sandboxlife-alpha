@@ -100,8 +100,8 @@ export default function SignIn() {
           Build your profile
         </Typography>
         
-        { loginApiResult.result.username ? <Typography component="h1" variant="h5" color={'#9b1d1e'}>
-          {loginApiResult.result.username} is logged in!
+        { loginApiResult.result?.username ? <Typography component="h1" variant="h5" color={'#9b1d1e'}>
+          {loginApiResult.result?.username} is logged in!
         </Typography>  : <Box sx={{ mt: 1 }}>
           <TextField
             margin="normal"

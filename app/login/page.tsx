@@ -45,17 +45,19 @@ export default function SignIn() {
       ...form,
       [id] : value
     };
+    console.log(updatedForm, 'update');
     setForm(updatedForm);
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
     setLoginApiResult({ ...loginApiResult, loading: true });
+    console.log(form, 'before');
     postAPI('/users/login', form).then(result => {
       setLoginApiResult({ ...loginApiResult, loading: false, result });
-      console.log(auth, 'auth res');
-      auth.updateUser(result);
-      setTimeout(() => router.push('/home'), 500);
+      console.log(auth, form, 'auth res');
+      // auth.updateUser(result);
+      // setTimeout(() => router.push('/home'), 500);
     }).catch(e => {
       setLoginApiResult({ ...loginApiResult, loading: false, error: e });
       console.log(e, 'error');
@@ -73,7 +75,7 @@ export default function SignIn() {
     return () => {
       document.removeEventListener("keydown", listener);
     };
-  }, [])
+  }, [form])
 
 
 
@@ -98,7 +100,9 @@ export default function SignIn() {
           Build your profile
         </Typography>
         
-        <Box sx={{ mt: 1 }}>
+        { loginApiResult.result.username ? <Typography component="h1" variant="h5" color={'#9b1d1e'}>
+          {loginApiResult.result.username} is logged in!
+        </Typography>  : <Box sx={{ mt: 1 }}>
           <TextField
             margin="normal"
             onChange={handleChange}
@@ -151,7 +155,7 @@ export default function SignIn() {
               </Link>
             </Grid>
           </Grid>
-        </Box>
+        </Box>}
       </Box>
       <Copyright sx={{ mt: 8, mb: 4 }} />
     </Container>

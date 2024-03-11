@@ -14,7 +14,6 @@ import Container from '@mui/material/Container';
 import { postAPI } from '../../services/apiService';
 import { CircularProgress } from '@mui/material';
 import { useAuthContext } from '../../AuthProvider';
-import { useRouter } from 'next/navigation';
 
 function Copyright(props: any) {
   return (
@@ -34,9 +33,8 @@ function Copyright(props: any) {
 
 export default function SignIn() {
   const auth = useAuthContext();
-  const router = useRouter();
   const [form, setForm] = React.useState({ email: '', password_hash: '' });
-  const [loginApiResult, setLoginApiResult] = React.useState({ loading: false, error: null, result: null })
+  const [loginApiResult, setLoginApiResult] = React.useState({ loading: false, error: null, result: { username: null } })
   const handleChange = (event) => {
     event.preventDefault();
     const id = event.target.id

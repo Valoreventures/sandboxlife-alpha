@@ -14,6 +14,7 @@ import Container from '@mui/material/Container';
 import { postAPI } from '../../services/apiService';
 import { CircularProgress } from '@mui/material';
 import { useAuthContext } from '../../AuthProvider';
+import axios from 'axios';
 
 function Copyright(props: any) {
   return (
@@ -51,15 +52,24 @@ export default function SignIn() {
     event.preventDefault();
     setLoginApiResult({ ...loginApiResult, loading: true });
     console.log(form, 'before');
-    postAPI('/users/login', form).then(result => {
-      setLoginApiResult({ ...loginApiResult, loading: false, result });
+    axios.post('/api/users/login', form).then(result => {
       console.log(auth, form, 'auth res');
+      setLoginApiResult({ ...loginApiResult, loading: false, result });
       // auth.updateUser(result);
       // setTimeout(() => router.push('/home'), 500);
     }).catch(e => {
-      setLoginApiResult({ ...loginApiResult, loading: false, error: e });
       console.log(e, 'error');
+      setLoginApiResult({ ...loginApiResult, loading: false, error: e });
     })
+    // postAPI('/users/login', form).then(result => {
+    //   setLoginApiResult({ ...loginApiResult, loading: false, result });
+    //   console.log(auth, form, 'auth res');
+    //   // auth.updateUser(result);
+    //   // setTimeout(() => router.push('/home'), 500);
+    // }).catch(e => {
+    //   setLoginApiResult({ ...loginApiResult, loading: false, error: e });
+    //   console.log(e, 'error');
+    // })
   }
 
   React.useEffect(() => {

@@ -52,7 +52,7 @@ export default function SignIn() {
     event.preventDefault();
     setLoginApiResult({ ...loginApiResult, loading: true });
     console.log(form, 'before');
-    axios.post('/login', form).then(result => {
+    axios.post('/api/login', form).then(result => {
       console.log(auth, form, 'auth res');
       setLoginApiResult({ ...loginApiResult, loading: false, result });
       // auth.updateUser(result);

@@ -52,7 +52,7 @@ export default function SignIn() {
     event.preventDefault();
     setLoginApiResult({ ...loginApiResult, loading: true });
     console.log(form, 'before');
-    axios.post('/api/users/login', form).then(result => {
+    axios.post('/api/login', form).then(result => {
       console.log(auth, form, 'auth res');
       setLoginApiResult({ ...loginApiResult, loading: false, result });
       // auth.updateUser(result);
@@ -159,7 +159,7 @@ export default function SignIn() {
             </Grid>
             <Grid item>
               <Link href="/register" variant="body2">
-                {"Don't have an acctount? Sign Up"}
+                {"Don't have an account? Sign Up"}
               </Link>
             </Grid>
           </Grid>
